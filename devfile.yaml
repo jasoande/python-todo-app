@@ -52,7 +52,7 @@ commands:
       group:
         kind: run
       label: Run the application
-      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+      workingDir: '${PROJECTS_ROOT}/python-todo-app'
     id: run-app
   - exec:
       commandLine: python -m venv venv && . venv/bin/activate && pip3 install -r requirements.txt
@@ -60,7 +60,7 @@ commands:
       group:
         kind: run
       label: Install application dependencies
-      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+      workingDir: '${PROJECTS_ROOT}/python-todo-app'
     id: install-dependencies
   - exec:
       commandLine: . venv/bin/activate && pylint --rcfile=.pylintrc app.py
@@ -68,7 +68,7 @@ commands:
       group:
         kind: run
       label: Run linting checks on application
-      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+      workingDir: '${PROJECTS_ROOT}/python-todo-app'
     id: run-linting-checks
   - exec:
       commandLine: . venv/bin/activate && coverage run -m pytest -v && coverage report -m
@@ -76,7 +76,7 @@ commands:
       group:
         kind: run
       label: Run code coverage report
-      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+      workingDir: '${PROJECTS_ROOT}/python-todo-app'
     id: run-code-coverage-report
   - exec:
       commandLine: . venv/bin/activate && pytest -v
@@ -84,5 +84,5 @@ commands:
       group:
         kind: run
       label: Run unit tests for application
-      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+      workingDir: '${PROJECTS_ROOT}/python-todo-app'
     id: run-unit-tests
