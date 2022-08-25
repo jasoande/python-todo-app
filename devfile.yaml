@@ -1,0 +1,88 @@
+schemaVersion: 2.1.0
+metadata:
+  name: python-todo-app
+projects:
+  - git:
+      checkoutFrom:
+        revision: master
+      remotes:
+        origin: 'https://github.com/kinneyjohn/python-todo-app.git'
+    name: python-todo-app
+components:
+  - attributes:
+      app.kubernetes.io/name: python
+      che-theia.eclipse.org/vscode-extensions:
+        - 'relative:extension/resources/github_com/microsoft/vscode-python/releases/download/2020_7_94776/ms-python-release.vsix'
+      che-theia.eclipse.org/vscode-preferences:
+        python.globalModuleInstallation: true
+    container:
+      args:
+        - sh
+        - '-c'
+        - '${PLUGIN_REMOTE_ENDPOINT_EXECUTABLE}'
+      env:
+        - name: REGION
+          value: Dev Spaces
+        - name: PIP_INDEX_URL
+          value: 'https://pypi.org/simple'
+        - name: PLUGIN_REMOTE_ENDPOINT_EXECUTABLE
+          value: /remote-endpoint/plugin-remote-endpoint
+        - name: THEIA_PLUGINS
+          value: 'local-dir:///plugins/sidecars/python'
+        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
+          value: 'http://plugin-registry.openshift-operators.svc:8080/v3'
+      image: 'registry.redhat.io/devspaces/udi-rhel8@sha256:aed2d0df14feebbc5536c4f66184bb9cdcc7c1177351708467fa64f69c8d6e40'
+      memoryLimit: 512Mi
+      mountSources: true
+      sourceMapping: /projects
+      volumeMounts:
+        - name: venv
+          path: /home/user/.venv
+        - name: remote-endpoint
+          path: /remote-endpoint
+        - name: plugins
+          path: /plugins
+    name: python
+  - name: venv
+    volume: {}
+commands:
+  - exec:
+      commandLine: . venv/bin/activate && python app.py
+      component: python
+      group:
+        kind: run
+      label: Run the application
+      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+    id: run-app
+  - exec:
+      commandLine: python -m venv venv && . venv/bin/activate && pip3 install -r requirements.txt
+      component: python
+      group:
+        kind: run
+      label: Install application dependencies
+      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+    id: install-dependencies
+  - exec:
+      commandLine: . venv/bin/activate && pylint --rcfile=.pylintrc app.py
+      component: python
+      group:
+        kind: run
+      label: Run linting checks on application
+      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+    id: run-linting-checks
+  - exec:
+      commandLine: . venv/bin/activate && coverage run -m pytest -v && coverage report -m
+      component: python
+      group:
+        kind: run
+      label: Run code coverage report
+      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+    id: run-code-coverage-report
+  - exec:
+      commandLine: . venv/bin/activate && pytest -v
+      component: python
+      group:
+        kind: run
+      label: Run unit tests for application
+      workingDir: '${PROJECTS_ROOT}/sample-apps/todo-python'
+    id: run-unit-tests
