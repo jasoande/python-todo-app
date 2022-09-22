@@ -1,6 +1,7 @@
 schemaVersion: 2.1.0
 metadata:
   name: python-todo-app
+attributes: {}
 projects:
   - git:
       checkoutFrom:
@@ -29,7 +30,7 @@ components:
           value: /remote-endpoint/plugin-remote-endpoint
         - name: THEIA_PLUGINS
           value: 'local-dir:///plugins/sidecars/python'
-         - name: CHE_DASHBOARD_URL
+        - name: CHE_DASHBOARD_URL
           value: 'https://devspaces.apps.np1-east.kinja.local'
         - name: CHE_PLUGIN_REGISTRY_URL
           value: 'https://devspaces.apps.np1-east.kinja.local/plugin-registry/v3'
