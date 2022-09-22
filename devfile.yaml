@@ -30,12 +30,6 @@ components:
           value: /remote-endpoint/plugin-remote-endpoint
         - name: THEIA_PLUGINS
           value: 'local-dir:///plugins/sidecars/python'
-        - name: CHE_DASHBOARD_URL
-          value: 'https://devspaces.apps.np1-east.kinja.local'
-        - name: CHE_PLUGIN_REGISTRY_URL
-          value: 'https://devspaces.apps.np1-east.kinja.local/plugin-registry/v3'
-        - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
-          value: 'http://plugin-registry.openshift-operators.svc:8080/v3'
       image: 'registry.redhat.io/devspaces/udi-rhel8@sha256:aed2d0df14feebbc5536c4f66184bb9cdcc7c1177351708467fa64f69c8d6e40'
       memoryLimit: 512Mi
       mountSources: true
